@@ -1,252 +1,197 @@
-# TikTok Shop Affiliate Sales Scraper
+# TikTok Shop Affiliate Intelligence
 
-> Extract TikTok Shop products, affiliate commissions, sales volumes, and trending product data
+Find which creators are promoting any TikTok Shop product. Get verified product details, affiliate creator names, follower counts, and sales data. No login required.
 
-[![Try on Apify](https://img.shields.io/badge/Try_on-Apify_Store-00C7B7?style=for-the-badge&logo=apify)](https://apify.com/george.the.developer/tiktok-shop-affiliate-sales-scraper)
-[![GitHub](https://img.shields.io/badge/Source-GitHub-181717?style=for-the-badge&logo=github)](https://github.com/the-ai-entrepreneur-ai-hub/tiktok-shop-scraper)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow?style=for-the-badge)](LICENSE)
+## The Question This Answers
 
----
+**"If I have a TikTok Shop product, who is actually promoting it, and is it worth paying attention to?"**
 
-## Overview
+This actor gives you a real answer with verified data:
 
-TikTok Shop Affiliate Sales Scraper extracts comprehensive product data from TikTok Shop including pricing, affiliate commission rates, sales volumes, seller info, and reviews. Built for dropshippers, affiliate marketers, and e-commerce researchers who need real-time intelligence on what sells on TikTok.
+- Product name, price, sales count, rating
+- Which creators are actively promoting it
+- Creator follower counts and profile URLs
+- Whether the product has real affiliate momentum
 
-![Node.js](https://img.shields.io/badge/Node.js-339933?style=flat&logo=node.js&logoColor=white) ![Crawlee](https://img.shields.io/badge/Crawlee-00C7B7?style=flat&logo=apify&logoColor=white) ![Puppeteer](https://img.shields.io/badge/Puppeteer-40B5A4?style=flat&logo=puppeteer&logoColor=white) ![Apify](https://img.shields.io/badge/Apify_SDK-00C7B7?style=flat&logo=apify&logoColor=white)
+## Who Uses This
 
----
+**TikTok Shop sellers** check whether a product already has affiliate momentum before investing in inventory or ads.
 
-## Architecture
+**Affiliate managers** at agencies see which creators are pushing a product and whether they should recruit or avoid them.
 
-```mermaid
-graph LR
-    A["Input: Search Query / Category"] --> B["Crawlee Engine"]
-    B --> C["TikTok Shop"]
-    C --> D["Data Extraction"]
-    D --> E["Clean & Structure"]
-    E --> F["Output: JSON/CSV"]
+**Product researchers** compare competitor products by affiliate activity. More active affiliates usually means a winning product.
 
-    style A fill:#F5C542,stroke:#D4A017,color:#1a1a2e
-    style B fill:#6366f1,stroke:#4338ca,color:#ffffff
-    style C fill:#f97316,stroke:#c2410c,color:#ffffff
-    style D fill:#8b5cf6,stroke:#6d28d9,color:#ffffff
-    style E fill:#06b6d4,stroke:#0891b2,color:#ffffff
-    style F fill:#34d399,stroke:#065f46,color:#1a1a2e
-```
-
----
+**Freelancers** use this as a backend for TikTok Shop research gigs. Run the actor for $0.05, deliver a report for $200.
 
 ## How It Works
 
-```mermaid
-sequenceDiagram
-    participant U as User
-    participant A as TikTok Shop Affiliate Sales Scraper
-    participant T as TikTok Shop
-    participant D as Apify Dataset
-
-    U->>A: Provide input (Search Query / Category)
-    A->>A: Validate & configure
-    A->>T: Navigate & extract data
-    T-->>A: Raw HTML / JSON
-    A->>A: Parse, clean & deduplicate
-    A->>D: Store structured results
-    D-->>U: Download JSON / CSV / Excel
+```
+Product URL  -->  Verified Product Data  -->  Creator Detection  -->  Structured Output
+                  (name, price, sales)       (who promotes it)       (JSON / CSV / Excel)
 ```
 
-**Step-by-step:**
+1. Pass a TikTok Shop product URL
+2. The actor verifies the product through multiple data sources
+3. Detects the creator/affiliate promotion block
+4. Returns structured data with verified status
 
-1. **Input Validation** — Your configuration is validated and the scraping session is initialized with optimal proxy settings
-2. **Smart Crawling** — Crawlee manages request queues, retries, and proxy rotation automatically for maximum reliability
-3. **Data Extraction** — Structured data is parsed from each page using optimized selectors and anti-detection measures
-4. **Deduplication** — Results are deduplicated and cleaned to ensure high data quality with no duplicates
-5. **Output Delivery** — Clean, structured data is saved to your Apify dataset for download or API access
+No cookies. No login. No account risk.
 
----
+## Input
 
-## Input Parameters
+```json
+{
+  "productUrl": "https://www.tiktok.com/view/product/1234567890"
+}
+```
+
+Or search for products by keyword:
+
+```json
+{
+  "searchQuery": "skincare serum",
+  "maxProducts": 5
+}
+```
 
 | Parameter | Type | Description |
 |-----------|------|-------------|
-| `searchQuery` | `String` | Product search on TikTok Shop |
-| `category` | `String` | Product category filter |
-| `maxProducts` | `Number` | Maximum products to extract |
-| `sortBy` | `String` | Sort: best_selling, newest, price_asc, price_desc |
-| `minCommission` | `Number` | Minimum affiliate commission percentage |
+| productUrl | String | Direct TikTok Shop product URL |
+| searchQuery | String | Search TikTok Shop by keyword |
+| maxProducts | Number | Max products to analyze (default 5) |
 
-### Input Example
+## Output
 
 ```json
 {
-  "searchQuery": "kitchen gadgets",
-  "category": "Home & Garden",
-  "maxProducts": 100,
-  "sortBy": "best_selling",
-  "minCommission": 10
+  "product": {
+    "name": "Vitamin C Brightening Serum",
+    "price": "$12.99",
+    "salesCount": 45000,
+    "rating": 4.8,
+    "url": "https://www.tiktok.com/view/product/1234567890"
+  },
+  "affiliates": [
+    {
+      "username": "@skincarebyjess",
+      "profileUrl": "https://www.tiktok.com/@skincarebyjess",
+      "followers": 850000,
+      "salesCount": 2300
+    },
+    {
+      "username": "@glowupqueen",
+      "profileUrl": "https://www.tiktok.com/@glowupqueen",
+      "followers": 420000,
+      "salesCount": 1100
+    }
+  ],
+  "dataSource": "verified_success",
+  "scrapedAt": "2026-04-16T10:30:00.000Z"
 }
 ```
 
----
+## What "Verified" Means
 
-## Output Fields
+Every result is tagged with its verification status:
 
-| Field | Type | Description |
-|-------|------|-------------|
-| `productName` | `String` | Product title |
-| `price` | `Number` | Current selling price |
-| `originalPrice` | `Number` | Original price before discount |
-| `salesCount` | `Number` | Total units sold |
-| `commissionRate` | `Number` | Affiliate commission percentage |
-| `sellerName` | `String` | Seller/shop name |
-| `rating` | `Number` | Product rating (1-5) |
-| `reviewCount` | `Number` | Number of product reviews |
-| `productUrl` | `String` | Direct TikTok Shop listing link |
+| Status | Meaning |
+|--------|---------|
+| verified_success | Product and creators confirmed from live TikTok data |
+| partial_verified | Product confirmed, some creator data from cached sources |
+| serp_enriched | Data recovered from Google cached pages |
 
-### Output Example
-
-```json
-{
-  "productName": "Electric Vegetable Chopper 3-in-1",
-  "price": 24.99,
-  "originalPrice": 49.99,
-  "salesCount": 15420,
-  "commissionRate": 15,
-  "sellerName": "KitchenPro Official",
-  "rating": 4.6,
-  "reviewCount": 2840,
-  "productUrl": "https://shop.tiktok.com/product/abc123"
-}
-```
-
----
-
-## Use Cases
-
-- **Dropshipping Research** — Find trending high-margin products with proven TikTok sales velocity
-- **Affiliate Marketing** — Discover products with best commission rates and sales volumes
-- **Competitive Analysis** — Monitor competitor pricing and sales performance on TikTok
-- **Trend Forecasting** — Track rising product categories on TikTok Shop
-- **Supplier Discovery** — Find successful sellers for wholesale partnerships
-
----
-
-## Data Flow
-
-```mermaid
-flowchart TD
-    subgraph Input
-        A["Search Query / Category"] --> B[Proxy Configuration]
-        B --> C[Max Results & Filters]
-    end
-    subgraph Processing
-        D[Smart Request Queue] --> E[Anti-Bot Handling]
-        E --> F[Data Extraction]
-        F --> G[Deduplication & Cleaning]
-    end
-    subgraph Output
-        H[JSON Dataset] --> I[CSV Export]
-        I --> J[API Access]
-    end
-    Input --> Processing --> Output
-
-    style A fill:#F5C542,stroke:#D4A017,color:#1a1a2e
-    style G fill:#06b6d4,stroke:#0891b2,color:#ffffff
-    style J fill:#34d399,stroke:#065f46,color:#1a1a2e
-```
-
----
+The actor never fakes results. If it cannot verify the data, it tells you.
 
 ## Pricing
 
-This actor uses Apify's **Pay-Per-Event** pricing. You only pay for what you use.
+| What you pay | Cost |
+|-------------|------|
+| Per product analyzed | $0.05 |
 
-| Event | Price | Description |
-|-------|-------|-------------|
-| `product-extracted` | $0.004 | Per product listing extracted |
-| `seller-profiled` | $0.008 | Per seller profile analyzed |
+Check 20 products: $1.00. Check 100 products: $5.00.
 
-> Free tier available on Apify. No credit card required to start.
+Compare that to manual research (30 min per product at $50/hr = $25 per product).
 
----
+## Use Cases
 
-## Getting Started
+### Seller: Should I launch this product?
 
-### Run on Apify Console
+Check if similar products already have affiliate momentum. If 10 creators are pushing a competitor product with 50K+ sales, there is demand. If nobody is promoting it, you might be first or the product might not sell.
 
-1. Go to [TikTok Shop Affiliate Sales Scraper on Apify Store](https://apify.com/george.the.developer/tiktok-shop-affiliate-sales-scraper)
-2. Click **"Try for free"**
-3. Configure your input parameters
-4. Click **"Start"** and wait for results
-5. Download your data as JSON, CSV, or Excel
+### Agency: Which creators should we recruit?
 
-### Run via API
+Search your client's product category. See who is already promoting similar products. Those creators have proven they can drive TikTok Shop sales. Recruit them instead of guessing.
+
+### Competitor research
+
+Check a competitor's product URL. See exactly who promotes it, how many followers those creators have, and what the sales numbers look like. Build your strategy based on data, not guesses.
+
+### Freelancer backend
+
+Accept TikTok Shop research gigs on Upwork or Fiverr. Run this actor for $0.05 per product. Deliver a formatted report. Charge $200+. Your margin is 99%.
+
+## Quick Start
+
+### Run on Apify
+
+1. Go to [TikTok Shop Affiliate Intelligence](https://apify.com/george.the.developer/tiktok-shop-affiliate-sales-scraper)
+2. Paste a product URL
+3. Click Start
+4. Download results as JSON, CSV, or Excel
+
+### API
 
 ```bash
 curl -X POST "https://api.apify.com/v2/acts/george.the.developer~tiktok-shop-affiliate-sales-scraper/runs" \
   -H "Content-Type: application/json" \
-  -H "Authorization: Bearer YOUR_API_TOKEN" \
-  -d '{"searchQuery":"kitchen gadgets","category":"Home & Garden","maxProducts":100,"sortBy":"best_selling","minCommission":10}'
+  -H "Authorization: Bearer YOUR_TOKEN" \
+  -d '{"productUrl": "https://www.tiktok.com/view/product/1234567890"}'
 ```
 
-### Run with Python
+### Python
 
 ```python
 from apify_client import ApifyClient
 
-client = ApifyClient("YOUR_API_TOKEN")
+client = ApifyClient("YOUR_TOKEN")
 run = client.actor("george.the.developer/tiktok-shop-affiliate-sales-scraper").call(
-    run_input={
-    "searchQuery": "kitchen gadgets",
-    "category": "Home & Garden",
-    "maxProducts": 100,
-    "sortBy": "best_selling",
-    "minCommission": 10
-}
+    run_input={"productUrl": "https://www.tiktok.com/view/product/1234567890"}
 )
 
 for item in client.dataset(run["defaultDatasetId"]).iterate_items():
-    print(item)
+    print(f"Product: {item['product']['name']}")
+    print(f"Affiliates: {len(item['affiliates'])}")
+    for a in item['affiliates']:
+        print(f"  @{a['username']} - {a['followers']} followers")
 ```
 
----
+## 中文简介
 
-## Tech Stack
+### TikTok商店联盟营销情报
 
-| Technology | Purpose |
-|------------|---------|
-| **Node.js** | Runtime environment |
-| **Crawlee** | Web scraping and crawling framework |
-| **Puppeteer** | Browser automation for JavaScript-rendered pages |
-| **Apify SDK** | Actor lifecycle, storage, and proxy management |
+查询任何TikTok商店产品的推广创作者信息。获取验证过的产品数据、创作者名称、粉丝数量和销售情报。
 
----
+**主要功能：**
+
+- 输入TikTok商店产品链接，获取产品详情和推广创作者列表
+- 智能多源数据验证，确保数据真实可靠
+- 支持关键词搜索批量发现热门产品
+- 每个产品分析仅需 $0.05
+
+**适用场景：** TikTok商店卖家选品、联盟营销管理、竞品分析、市场调研
+
+[在Apify商店免费试用 >>>](https://apify.com/george.the.developer/tiktok-shop-affiliate-sales-scraper)
 
 ## Related Actors
 
-More data extraction tools by [George The Developer](https://apify.com/george.the.developer):
+- [Influencer Marketing Intelligence](https://apify.com/george.the.developer/influencer-marketing-intel) - Find influencers across Instagram, TikTok, YouTube
+- [Google Maps Lead Intel](https://apify.com/george.the.developer/google-maps-lead-intel) - Local business leads with email validation
+- [AI Content Detector](https://apify.com/george.the.developer/ai-content-detector) - Detect AI generated text
+- [Email Validator API](https://apify.com/george.the.developer/email-validator-api) - SMTP email verification
 
-- [Reddit Scraper Pro](https://apify.com/george.the.developer/reddit-scraper-pro) — Extract posts, comments, user profiles, and subreddit data from Reddit at scale 
-- [AI Training Data Scraper](https://apify.com/george.the.developer/ai-training-data-scraper) — Collect structured, clean datasets from the web purpose-built for training machi
-- [Influencer Marketing Intel](https://apify.com/george.the.developer/influencer-marketing-intel) — Discover and analyze social media influencers with engagement metrics, audience 
-- [Google Maps Leads & Website Audit](https://apify.com/george.the.developer/google-maps-leads-website-audit) — Extract business leads from Google Maps with automated website audits for contac
-- [App Review Pain Miner](https://apify.com/george.the.developer/app-review-pain-miner) — Extract and analyze app store reviews to discover user pain points, feature requ
-
-[View all actors on Apify Store >>>](https://apify.com/george.the.developer)
-
----
+[View all 57 actors >>>](https://apify.com/george.the.developer)
 
 ## Support
 
-- **Apify Store**: [https://apify.com/george.the.developer/tiktok-shop-affiliate-sales-scraper](https://apify.com/george.the.developer/tiktok-shop-affiliate-sales-scraper)
-- **GitHub Issues**: [Report a bug](https://github.com/the-ai-entrepreneur-ai-hub/tiktok-shop-scraper/issues)
-- **Author**: [George The Developer](https://apify.com/george.the.developer)
-
----
-
-## License
-
-MIT License. See [LICENSE](LICENSE) for details.
-
----
-
-*Built with Crawlee and the Apify SDK by [George The Developer](https://apify.com/george.the.developer). Star this repo if you find it useful!*
+- **Apify Store**: [TikTok Shop Affiliate Intelligence](https://apify.com/george.the.developer/tiktok-shop-affiliate-sales-scraper)
+- **X/Twitter**: [@ai_in_it](https://x.com/ai_in_it)
