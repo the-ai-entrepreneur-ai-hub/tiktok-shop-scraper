@@ -2,7 +2,7 @@
 
 Find which creators are promoting any TikTok Shop product. Get verified product data, affiliate creator usernames, follower counts, and sales signals. No login, no cookies, no account risk.
 
-[![Run on Apify](https://img.shields.io/badge/Apify-Run%20Actor-0572B8)](https://apify.com/george.the.developer/tiktok-shop-affiliate-sales-scraper)
+[![Run on Apify](https://img.shields.io/badge/Apify-Run%20Actor-0572B8)](https://apify.com/george.the.developer/tiktok-shop-affiliate-sales-scraper?fpr=bbquoh)
 
 ## The question this answers
 
@@ -101,7 +101,7 @@ The actor never fakes results. If it cannot verify, the quality state tells you.
 
 ## Pricing
 
-Pay per verified product scraped. See the [Apify listing](https://apify.com/george.the.developer/tiktok-shop-affiliate-sales-scraper) for the current rate. You only pay for products that return verified data.
+Pay per verified product scraped. See the [Apify listing](https://apify.com/george.the.developer/tiktok-shop-affiliate-sales-scraper?fpr=bbquoh) for the current rate. You only pay for products that return verified data.
 
 ## Use cases
 
@@ -125,7 +125,7 @@ Accept TikTok Shop research gigs on Upwork or Fiverr. Run the actor. Deliver a f
 
 ### Run on Apify (web UI)
 
-1. Open [TikTok Shop Affiliate Scraper](https://apify.com/george.the.developer/tiktok-shop-affiliate-sales-scraper)
+1. Open [TikTok Shop Affiliate Scraper](https://apify.com/george.the.developer/tiktok-shop-affiliate-sales-scraper?fpr=bbquoh)
 2. Paste a product URL in the input field
 3. Click Start
 4. Download results as JSON, CSV, or Excel
@@ -171,20 +171,20 @@ for item in client.dataset(run["defaultDatasetId"]).iterate_items():
 
 **工作原理：** 多源数据验证，即使TikTok更改页面结构或临时屏蔽，也能从其他来源恢复数据。
 
-[在Apify商店试用 >>>](https://apify.com/george.the.developer/tiktok-shop-affiliate-sales-scraper)
+[在Apify商店试用 >>>](https://apify.com/george.the.developer/tiktok-shop-affiliate-sales-scraper?fpr=bbquoh)
 
 ## Related actors
 
-- [Influencer Marketing Intelligence](https://apify.com/george.the.developer/influencer-marketing-intel) find influencers across Instagram, TikTok, YouTube
-- [Google Maps Lead Intel](https://apify.com/george.the.developer/google-maps-lead-intel) local business leads with email validation
-- [Amazon Product Data API](https://apify.com/george.the.developer/amazon-product-data) Amazon product scraping
-- [Email Validator API](https://apify.com/george.the.developer/email-validator-api) SMTP email verification
+- [Influencer Marketing Intelligence](https://apify.com/george.the.developer/influencer-marketing-intel?fpr=bbquoh) find influencers across Instagram, TikTok, YouTube
+- [Google Maps Lead Intel](https://apify.com/george.the.developer/google-maps-lead-intel?fpr=bbquoh) local business leads with email validation
+- [Amazon Product Data API](https://apify.com/george.the.developer/amazon-product-data?fpr=bbquoh) Amazon product scraping
+- [Email Validator API](https://apify.com/george.the.developer/email-validator-api?fpr=bbquoh) SMTP email verification
 
-[Browse all actors](https://apify.com/george.the.developer)
+[Browse all actors](https://apify.com/george.the.developer?fpr=bbquoh)
 
 ## Support
 
-- Apify listing: [TikTok Shop Affiliate Scraper](https://apify.com/george.the.developer/tiktok-shop-affiliate-sales-scraper)
+- Apify listing: [TikTok Shop Affiliate Scraper](https://apify.com/george.the.developer/tiktok-shop-affiliate-sales-scraper?fpr=bbquoh)
 - X / Twitter: [@ai_in_it](https://x.com/ai_in_it)
 
 ## Keywords
